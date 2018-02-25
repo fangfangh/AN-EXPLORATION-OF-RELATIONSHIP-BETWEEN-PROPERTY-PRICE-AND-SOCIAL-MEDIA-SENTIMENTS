@@ -1,0 +1,125 @@
+
+<html lang="en">
+        <title>Map of sydney tw</title>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script> 
+        <!--
+        <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+        -->
+        <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script> 
+        <a id="img_id"><img src='https://upload.wikimedia.org/wikipedia/commons/e/ec/RedDot.svg' id='RedDot' width="0" height="0" /></a>
+        <style>
+        #map {
+            width: 1200px; height: 800px
+        }
+        </style>
+    </head>
+    <body>
+    <h1>Map of sydney tw</h1>
+    
+    <p><a href="../">See other demos</a></p>
+        <div id="map"></div>
+<script>
+// var public_token = 'pk.eyJ1IjoiYm9uemFuaW5pIiwiYSI6IjZmODA2ODYzM2UyYTA4YWI0NmMwMjAxYmVjZjdkZGMwIn0.8b8xOSqfwHp4Szg_IwND1Q'
+// var mytiles = L.tileLayer('https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+//     maxZoom: 18,
+//     id: 'bonzanini.mb0n9fan',
+//     accessToken: public_token
+// });
+var map = L.map('map').setView([-33.865143, 151.209900], 13); 
+var mytiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}); 
+
+var geodat ={
+    "type": "FeatureCollection", 
+    "features": [
+        {
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [
+                    -31.95391916058, 
+                    115.85849046707
+                ]
+            }, 
+            "type": "Feature", 
+            "properties": {
+                "text": "[perthhairdresser, style, waves, movement, fromsicily, haircolour, fashion, wella, styleoftheday, hair, brownhair, perthhairstylist, summerishere, ghd, houseofernest, colour, perthhair, longhairstyles, myjob, highlights, longhair, balayage, lookoftheday, mirror, curlyhair]", 
+                "created_at": [
+                    2018, 
+                    2, 
+                    6, 
+                    2, 
+                    50, 
+                    33, 
+                    3, 
+                    "AEDT"
+                ]
+            }
+        }, 
+        {
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [
+                    -31.9522, 
+                    115.859
+                ]
+            }, 
+            "type": "Feature", 
+            "properties": {
+                "text": "[instagoodmyphoto, sunset, livefolk, travelingtheworld, instatravel, wanderlust, travelgram, australia, visitperth, exploretocreate, bestvacations, lighthouse, passionpassport, travelpic, perth, rottnestisland, worldtravelbook, justgoshoot]", 
+                "created_at": [
+                    2018, 
+                    2, 
+                    8, 
+                    15, 
+                    36, 
+                    20, 
+                    5, 
+                    "AEDT"
+                ]
+            }
+        }]}
+ 
+    var myStyle = {
+        radius: 2,
+        fillColor: "red",
+        color: "red",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 1
+    };
+ 
+var icon = $("#img_id").find("img").attr("src");
+var redfot = L.icon({
+    iconUrl: icon,
+    shadowUrl: icon,
+    iconSize:     [20, 20], // size of the icon
+    shadowSize:   [5, 5], // size of the shadow 
+});
+
+$.getJSON("http://127.0.0.1:8080/place-view-sydney-geo-tw.json", function(data) {
+    var myStyle = {
+        radius: 2,
+        fillColor: "red",
+        color: "red",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 1
+    };
+ 
+    var geojson = L.geoJson(data, {
+        pointToLayer: function (feature, latlng) {
+            return L.marker({lng: latlng.lat, lat: latlng.lng},{icon:redfot});
+        }
+    });
+    geojson.addTo(map)
+});  
+ 
+map.addLayer(mytiles);
+ 
+
+        </script>
+    </body>
+</html>
